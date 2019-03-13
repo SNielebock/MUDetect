@@ -160,6 +160,7 @@ public class Miner {
 								+ parts[1]
 								+ "\n");*/
 					}
+					FileIO.writeStringToFile(Integer.toString(p.getFreq()),patternDir.getAbsolutePath()+"/frequency.txt");
 					FileIO.writeStringToFile(sb.toString(),
 							patternDir.getAbsolutePath() + "/locations.txt");
 				}

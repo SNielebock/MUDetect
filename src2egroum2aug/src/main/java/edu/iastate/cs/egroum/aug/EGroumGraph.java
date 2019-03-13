@@ -346,6 +346,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, ASTNode node) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		if (node instanceof ArrayAccess)
 			return buildPDG(control, branch, (ArrayAccess) node);
 		if (node instanceof ArrayCreation)
@@ -458,6 +461,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, WhileStatement astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		context.addScope();
 		EGroumGraph pdg = buildArgumentPDG(control, branch, astNode.getExpression());
 		EGroumControlNode node = new EGroumControlNode(control, branch,
@@ -478,6 +484,9 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			VariableDeclarationStatement astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph pdg = buildPDG(control, branch, (ASTNode) astNode.fragments()
 				.get(0));
 		for (int i = 1; i < astNode.fragments().size(); i++)
@@ -487,6 +496,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, VariableDeclarationFragment astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		SimpleName name = astNode.getName();
 		String type = JavaASTUtil.getSimpleType(astNode);
 		context.addLocalVariable(name.getIdentifier(), "" + name.getStartPosition(), type);
@@ -504,6 +516,9 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			VariableDeclarationExpression astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph pdg = buildPDG(control, branch, (ASTNode) astNode.fragments()
 				.get(0));
 		for (int i = 1; i < astNode.fragments().size(); i++)
@@ -514,12 +529,18 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			TypeLiteral astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		return new EGroumGraph(context, new EGroumDataNode(
 				astNode, astNode.getNodeType(), "class", "Class", JavaASTUtil.getSimpleType(astNode.getType()) + ".class"), configuration);
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			TryStatement astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		context.pushTry();
 		context.addScope();
 		List<?> resources = astNode.resources();
@@ -621,6 +642,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, ThrowStatement astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph pdg = buildArgumentPDG(control, branch, astNode.getExpression());
 		EGroumActionNode node = new EGroumActionNode(control, branch,
 				astNode, astNode.getNodeType(), null, null, "throw");
@@ -634,6 +658,9 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			SynchronizedStatement astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph pdg = buildPDG(control, branch, astNode.getExpression());
 		EGroumControlNode node = new EGroumControlNode(control, branch,
 				astNode, astNode.getNodeType());
@@ -648,6 +675,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, SwitchStatement astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		List<?> statements = astNode.statements();
 		if (statements.isEmpty() || !(statements.get(0) instanceof SwitchCase))
 			return new EGroumGraph(context, configuration);
@@ -679,6 +709,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, SuperMethodInvocation astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph[] pgs = new EGroumGraph[astNode.arguments().size() + 1];
 		String type = context.getSuperType();
 		HashSet<String> exceptions = null;
@@ -716,6 +749,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, SuperConstructorInvocation astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph[] pgs = new EGroumGraph[astNode.arguments().size()];
 		for (int i = 0; i < astNode.arguments().size(); i++) {
 			pgs[i] = buildArgumentPDG(control, branch, (Expression) astNode.arguments().get(i));
@@ -749,6 +785,9 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			StringLiteral astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph pdg = new EGroumGraph(context, new EGroumDataNode(
 				astNode, astNode.getNodeType(), astNode.getEscapedValue(), "String", null,
 				astNode.getLiteralValue()), configuration);
@@ -757,6 +796,9 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			SingleVariableDeclaration astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		SimpleName name = astNode.getName();
 		String type = JavaASTUtil.getSimpleType(astNode.getType());
 		for (int i = 0; i < astNode.getExtraDimensions(); i++)
@@ -771,6 +813,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, SimpleName astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		String constantName = null, constantValue = null, type = null;
 		int astNodeType = ASTNode.SIMPLE_NAME;
 		IBinding b = astNode.resolveBinding();
@@ -866,6 +911,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, ReturnStatement astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph pdg = null;
 		EGroumActionNode node = null;
 		if (astNode.getExpression() != null) {
@@ -886,6 +934,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, QualifiedName astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		String constantName = null, constantValue = null, type = null;
 		int astNodeType = ASTNode.FIELD_ACCESS;
 		IBinding b = astNode.resolveBinding();
@@ -939,6 +990,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, PrefixExpression astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph pdg = buildArgumentPDG(control, branch, astNode.getOperand());
 		EGroumDataNode node = pdg.getOnlyDataOut();
 		if (astNode.getOperator() == PrefixExpression.Operator.PLUS)
@@ -969,6 +1023,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, PostfixExpression astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph lg = buildArgumentPDG(control, branch, astNode.getOperand());
 		EGroumDataNode node = lg.getOnlyDataOut();
 		EGroumGraph rg = new EGroumGraph(context, new EGroumDataNode(
@@ -986,11 +1043,17 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			ParenthesizedExpression astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		return buildPDG(control, branch, astNode.getExpression());
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			NumberLiteral astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		String type = "number";
 		if (astNode.resolveTypeBinding() != null)
 			type = astNode.resolveTypeBinding().getName();
@@ -1002,6 +1065,9 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			NullLiteral astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph pdg = new EGroumGraph(context, new EGroumDataNode(
 				astNode, astNode.getNodeType(), astNode.toString(), "null", null,
 				astNode.toString()), configuration);
@@ -1009,6 +1075,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, MethodInvocation astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		if (astNode.getName().getIdentifier().equals("exit")
 				&& astNode.getExpression() != null && astNode.getExpression().toString().equals("System")) {
 			EGroumActionNode node = new EGroumActionNode(control, branch,
@@ -1105,26 +1174,41 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			MethodDeclaration astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		// skip
 		return new EGroumGraph(context, configuration);
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, LabeledStatement astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		adjustBreakNodes(astNode.getLabel().getIdentifier());
 		return buildPDG(control, branch, astNode.getBody());
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, LambdaExpression astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		// TODO
 		return new EGroumGraph(context, new EGroumDataNode(astNode, ASTNode.NULL_LITERAL, "null", "null", "LAMBDA"), configuration);
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, MethodReference astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		// TODO
 		return new EGroumGraph(context, new EGroumDataNode(astNode, ASTNode.NULL_LITERAL, "null", "null", "LAMBDA"), configuration);
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, InstanceofExpression astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph pdg = buildArgumentPDG(control, branch, astNode.getLeftOperand());
 		EGroumNode node = new EGroumActionNode(control, branch,
 				astNode, astNode.getNodeType(), null, JavaASTUtil.getSimpleType(astNode.getRightOperand()) + ".<instanceof>", 
@@ -1135,10 +1219,16 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			Initializer astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		return buildPDG(control, branch, astNode.getBody());
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, InfixExpression astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph pdg = null;
 		if (astNode.getLeftOperand() instanceof NullLiteral)
 			pdg = buildArgumentPDG(control, branch, astNode.getRightOperand());
@@ -1204,6 +1294,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, IfStatement astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		context.addScope();
 		EGroumGraph pdg = buildArgumentPDG(control, branch, astNode.getExpression());
 		EGroumControlNode node = new EGroumControlNode(control, branch,
@@ -1227,6 +1320,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, ForStatement astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		context.addScope();
 		EGroumGraph pdg = null;
 		if (astNode.initializers() != null && astNode.initializers().size() > 0) {
@@ -1274,6 +1370,9 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			ExpressionStatement astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph pdg = buildPDG(control, branch, astNode.getExpression());
 		ArrayList<EGroumActionNode> rets = pdg.getReturns();
 		if (rets.size() > 0) {
@@ -1289,6 +1388,9 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			EnhancedForStatement astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		context.addScope();
 		SimpleName name = astNode.getParameter().getName();
 		String type = JavaASTUtil.getSimpleType(astNode.getParameter().getType());
@@ -1348,6 +1450,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, DoStatement astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		context.addScope();
 		EGroumControlNode node = new EGroumControlNode(control, branch,
 				astNode, astNode.getNodeType());
@@ -1367,6 +1472,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, ContinueStatement astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumActionNode node = new EGroumActionNode(control, branch,
 				astNode, astNode.getNodeType(), astNode.getLabel() == null ? "" : astNode.getLabel().getIdentifier(), null,
 				"continue");
@@ -1378,6 +1486,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, ConstructorInvocation astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph[] pgs = new EGroumGraph[astNode.arguments().size()];
 		int numOfParameters = 0;
 		for (int i = 0; i < astNode.arguments().size(); i++) {
@@ -1411,6 +1522,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, ConditionalExpression astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		context.addScope();
 		String type = "UNKNOWN";
 		if (astNode.resolveTypeBinding() != null)
@@ -1437,6 +1551,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, ClassInstanceCreation astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph[] pgs = new EGroumGraph[astNode.arguments().size()];
 		int numOfParameters = 0;
 		for (int i = 0; i < astNode.arguments().size(); i++) {
@@ -1510,6 +1627,9 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			CharacterLiteral astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		return new EGroumGraph(context, new EGroumDataNode(
 				astNode, astNode.getNodeType(), astNode.getEscapedValue(), "char", null,
 				astNode.getEscapedValue()), configuration);
@@ -1517,6 +1637,9 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			CatchClause astNode, ArrayList<EGroumActionNode> triedMethods) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		context.addScope();
 		SimpleName name = astNode.getException().getName();
 		String type = JavaASTUtil.getSimpleType(astNode.getException().getType());
@@ -1558,6 +1681,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, CastExpression astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph pdg = buildArgumentPDG(control, branch, astNode.getExpression());
 		String type = JavaASTUtil.getSimpleType(astNode.getType());
 		EGroumNode node = new EGroumActionNode(control, branch,
@@ -1568,6 +1694,9 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			BreakStatement astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumActionNode node = new EGroumActionNode(control, branch,
 				astNode, astNode.getNodeType(), astNode.getLabel() == null ? "" : astNode.getLabel().getIdentifier(), null,
 				"break");
@@ -1580,12 +1709,18 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			BooleanLiteral astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		return new EGroumGraph(context, new EGroumDataNode(
 				astNode, astNode.getNodeType(), astNode.toString(), "boolean", null,
 				astNode.toString()), configuration);
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, Block astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		if (astNode.statements().size() > 0) {
 			context.addScope();
 			EGroumGraph pdg = buildPDG(control, branch, astNode.statements());
@@ -1596,6 +1731,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, List<?> list) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph g = new EGroumGraph(context, configuration);
 		for (Object s : list) {
 			if (s instanceof EmptyStatement) continue;
@@ -1615,6 +1753,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, Assignment astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		if (astNode.getLeftHandSide() instanceof ArrayAccess) {
 			ArrayAccess aa = (ArrayAccess) astNode.getLeftHandSide();
 			EGroumGraph ag = buildArgumentPDG(control, branch, aa.getArray());
@@ -1677,6 +1818,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, AssertStatement astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		context.addScope();
 		EGroumGraph pdg = buildArgumentPDG(control, branch, astNode.getExpression());
 		EGroumControlNode node = new EGroumControlNode(control, branch, astNode, ASTNode.IF_STATEMENT);
@@ -1706,6 +1850,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, ArrayInitializer astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph[] pgs = new EGroumGraph[astNode.expressions().size()];
 		for (int i = 0; i < astNode.expressions().size(); i++) {
 			pgs[i] = buildArgumentPDG(control, branch, (Expression) astNode.expressions().get(i));
@@ -1726,6 +1873,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, ArrayCreation astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		if (astNode.getInitializer() != null) {
 			return buildPDG(control, branch, astNode.getInitializer());
 		}
@@ -1847,6 +1997,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildDefinitionPDG(EGroumNode control, String branch, ASTNode exp, EGroumDataNode data) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph pdg = buildArgumentPDG(control, branch, exp);
 		EGroumDataNode out = pdg.getOnlyDataOut();
 		if (out.isDummy()) {
@@ -1877,6 +2030,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildArgumentPDG(EGroumNode control, String branch, ASTNode exp) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph pdg = buildPDG(control, branch, exp);
 		if (pdg.isEmpty())
 			return pdg;
@@ -1933,6 +2089,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, ArrayAccess astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		EGroumGraph ag = buildArgumentPDG(control, branch, astNode.getArray());
 		String type = ag.getOnlyOut().dataType;
 		if (astNode.getArray().resolveTypeBinding() != null)
@@ -1947,6 +2106,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch, FieldAccess astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		String name = astNode.getName().getIdentifier();
 		if (astNode.getExpression() instanceof ThisExpression) {
 			String type = null;
@@ -1987,6 +2149,9 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			SuperFieldAccess astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		String name = astNode.getName().getIdentifier();
 		String type = null;
 		if (astNode.resolveTypeBinding() != null)
@@ -2014,6 +2179,9 @@ public class EGroumGraph implements Serializable {
 
 	private EGroumGraph buildPDG(EGroumNode control, String branch,
 			ThisExpression astNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		String type = context.getType();
 		if (astNode.resolveTypeBinding() != null)
 			type = astNode.resolveTypeBinding().getTypeDeclaration().getName();
@@ -2023,6 +2191,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private void mergeSequential(EGroumGraph pdg) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		if (pdg.statementNodes.isEmpty())
 			return;
         if (this.isEmpty()) {
@@ -2066,6 +2237,9 @@ public class EGroumGraph implements Serializable {
 	}
 	
 	private void mergeSequentialControl(EGroumNode next, String label) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		next.consumeDefStore(this);
 		sinks.clear();
 		sinks.add(next);
@@ -2078,6 +2252,9 @@ public class EGroumGraph implements Serializable {
 	}
 
 	private void mergeSequentialData(EGroumNode next, EGroumDataEdge.Type type) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		if (next.isStatement())
 			for (EGroumNode sink : statementSinks)
 				new EGroumDataEdge(sink, next, DEPENDENCE);

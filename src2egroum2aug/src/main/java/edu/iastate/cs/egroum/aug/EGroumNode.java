@@ -481,6 +481,9 @@ public abstract class EGroumNode {
 	}
 
 	public void buildPreSequentialNodes(HashSet<EGroumNode> visitedNodes, HashMap<EGroumNode, HashSet<EGroumNode>> preNodesOfNode) {
+		if(Thread.interrupted()){
+			throw new RuntimeException("thread interrupted");
+		}
 		visitedNodes.add(this);
 		HashSet<EGroumNode> preNodes = new HashSet<>();
 		for (EGroumEdge e : this.inEdges) {
