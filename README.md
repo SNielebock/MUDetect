@@ -56,7 +56,7 @@ To use the entire detector (AUG model, mining algorithm, and detection algorithm
     <dependency>
         <groupId>de.tu-darmstadt.stg.mudetect</groupId>
         <artifactId>mubench</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.0.3-SNAPSHOT</version>
     </dependency>
 
 To use only our model of API-usage graphs (AUGs), add the following dependency:
@@ -64,11 +64,11 @@ To use only our model of API-usage graphs (AUGs), add the following dependency:
     <dependency>
         <groupId>de.tu-darmstadt.stg.mudetect</groupId>
         <artifactId>augs</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.0.3-SNAPSHOT</version>
     </dependency>
 
 ## License
 
-All software provided in this repository is subject to the [CRAPL license](./CRAPL-LICENSE.txt).
+All software provided in this repository is subject to the [Mozilla Public License Version 2.0](LICENSE.txt).
 
 The project artwork is subject to the [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).
